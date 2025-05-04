@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Image Viewer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    img {
+      max-width: 90vw;
+      max-height: 80vh;
+      cursor: pointer;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Click the image to see another</h1>
+  <img id="random-image" src="" alt="Random image" onclick="showNextImage()" />
+  
+  <script>
+    const originalImages = [
+      'https://via.placeholder.com/800x600?text=Image+1',
+      'https://via.placeholder.com/800x600?text=Image+2',
+      'https://via.placeholder.com/800x600?text=Image+3',
+      'https://via.placeholder.com/800x600?text=Image+4'
+    ];
+
+    let shuffledImages = [];
+    let currentIndex = 0;
+
+    function shuffleImages() {
+      shuffledImages = originalImages.slice();
+      for (let i = shuffledImages.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledImages[i], shuffledImages[j]] = [shuffledImages[j], shuffledImages[i]];
+      }
+      currentIndex = 0;
+    }
+
+    function showNextImage() {
+      if (currentIndex >= shuffledImages.length) {
+        shuffleImages();
+      }
+      document.getElementById("random-image").src = shuffledImages[currentIndex];
+      currentIndex++;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      shuffleImages();
+      showNextImage();
+    });
+  </script>
+</body>
+</html>
