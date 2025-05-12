@@ -7,6 +7,7 @@
   <title>internet-web.site</title>
   <style>
     body {
+      padding-bottom: 80px;
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       text-align: center;
@@ -29,10 +30,10 @@
       cursor: pointer;
     }
     #source-info {
-      position: relative;
-      
+      position: fixed; bottom: 0; left: 0;
+      bottom: 0;
       left: 0;
-      padding: 0 0 100px 24px;
+      padding: 0 24px 24px 24px;
       width: 100%;
       max-width: 90vw;
       box-sizing: border-box;
@@ -43,10 +44,11 @@
     }
     a {
       color: black;
-      text-decoration: none;
+      text-decoration: underline;
     }
     @media (prefers-color-scheme: dark) {
       body {
+      padding-bottom: 80px;
         background: white !important;
         color: black !important;
       }
@@ -59,19 +61,10 @@
     <img id="random-image" src="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0"
          alt="random image" onclick="showNextImage()" onerror="handleImageError()" />
   </div>
-  
-    <div id="source-info" style="
-      margin-top: 50px;
-      padding: 0 24px 100px 24px;
-      max-width: 90vw;
-      text-align: left;
-      font-size: 12px;
-      line-height: 1.8;
-    ">
-      LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a><br><br>
-      internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a>
-    </div>
-    
+  <div id="source-info">
+    LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a><br><br>
+    internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a>
+  </div>
   <script>
     const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/36597569/original_e59e4c166450d10b725830771b55fb66.jpg?1746930932?bc=0";
     const originalImages = [
