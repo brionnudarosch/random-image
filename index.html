@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,20 +9,16 @@
   <meta name="twitter:image" content="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0" />
   <meta name="twitter:card" content="summary_large_image" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
+    * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+    body {{
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       background: white;
       color: black;
       display: flex;
       flex-direction: column;
       height: 100vh;
-    }
-    header {
+    }}
+    header {{
       position: fixed;
       top: 0;
       width: 100%;
@@ -32,21 +27,19 @@
       font-size: 12px;
       background: white;
       z-index: 10;
-    }
-    main {
+    }}
+    main {{
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 70px;
-      margin-bottom: 120px;
-    }
-    #random-image {
+    }}
+    #random-image {{
       max-width: 90vw;
       max-height: 60vh;
       cursor: pointer;
-    }
-    footer {
+    }}
+    footer {{
       position: fixed;
       bottom: 0;
       left: 0;
@@ -57,86 +50,54 @@
       font-size: 12px;
       line-height: 1.8;
       background: white;
-    }
-    a {
-      color: black;
-      text-decoration: underline;
-    }
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: white !important;
-        color: black !important;
-      }
-    }
+    }}
+    a {{ color: black; text-decoration: underline; }}
+    @media (prefers-color-scheme: dark) {{
+      body {{ background: white !important; color: black !important; }}
+    }}
   </style>
 </head>
 <body>
   <header>internet-web.site</header>
   <main>
-    <img id="random-image" src="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0" alt="random image" />
+    <img id="random-image" src="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0"
+         ontouchstart="handleTouchStart(event)" ontouchend="handleTouchEnd(event)" alt="random image" />
   </main>
   <footer>
     LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a><br><br>
     internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a>
   </footer>
-
   <script>
     const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/36597569/original_e59e4c166450d10b725830771b55fb66.jpg?1746930932?bc=0";
     const originalImages = [
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/9326275/original_1faa2a1c1b94c9ae497e237733872902.jpg?1604110101?bc=0",
-        link: "https://www.are.na/block/9326275"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/520498/original_f8f5f6e5bbf08eb7a77c2ca87f193029.jpg?1452893311?bc=1",
-        link: "https://www.are.na/block/520498"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/4347670/original_88805b52a45e6e88b481c92114d245c9.jpg?1558993312?bc=1",
-        link: "https://www.are.na/block/4347670"
-      }
+      {{ src: "https://d2w9rnfcy7mm78.cloudfront.net/9326275/original_1faa2a1c1b94c9ae497e237733872902.jpg?1604110101?bc=0", link: "https://www.are.na/block/9326275" }},
+      {{ src: "https://d2w9rnfcy7mm78.cloudfront.net/520498/original_f8f5f6e5bbf08eb7a77c2ca87f193029.jpg?1452893311?bc=1", link: "https://www.are.na/block/520498" }}
     ];
-
     let shuffledImages = [], currentIndex = 0;
-
-    function shuffleImages() {
+    function shuffleImages() {{
       shuffledImages = [...originalImages];
-      for (let i = shuffledImages.length - 1; i > 0; i--) {
+      for (let i = shuffledImages.length - 1; i > 0; i--) {{
         const j = Math.floor(Math.random() * (i + 1));
         [shuffledImages[i], shuffledImages[j]] = [shuffledImages[j], shuffledImages[i]];
-      }
+      }}
       currentIndex = 0;
-    }
-
-    function showNextImage() {
-      if (currentIndex >= shuffledImages.length) {
-        shuffleImages();
-      }
+    }}
+    function showNextImage() {{
+      if (currentIndex >= shuffledImages.length) shuffleImages();
       const imgData = shuffledImages[currentIndex];
-      const imageEl = document.getElementById("random-image");
-      imageEl.src = imgData.src;
+      document.getElementById("random-image").src = imgData.src;
       document.getElementById("source-link").href = imgData.link;
       currentIndex++;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      shuffleImages();
-    });
-
+    }}
+    document.addEventListener("DOMContentLoaded", () => shuffleImages());
     document.getElementById("random-image").addEventListener("click", showNextImage);
-
     let touchStartX = 0, touchStartY = 0;
-    window.addEventListener("touchstart", e => {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    });
-    window.addEventListener("touchend", e => {
+    function handleTouchStart(e) {{ touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }}
+    function handleTouchEnd(e) {{
       const dx = e.changedTouches[0].clientX - touchStartX;
       const dy = e.changedTouches[0].clientY - touchStartY;
-      if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
-        showNextImage();
-      }
-    });
+      if (Math.abs(dx) > 30) showNextImage();
+    }}
   </script>
 </body>
 </html>
