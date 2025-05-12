@@ -2,44 +2,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="favicon-v01.png" />
-  <meta property="og:image" content="social-image.jpg" />
-  <meta name="twitter:image" content="social-image.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>internet-web.site</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:image" content="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0" />
+  <meta name="twitter:image" content="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0" />
+  <meta name="twitter:card" content="summary_large_image" />
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      text-align: center;
       background: white;
       color: black;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
-    h1 {
-      margin-top: 30px;
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      padding: 30px 0;
       font-size: 12px;
-      font-weight: normal;
+      background: white;
+      z-index: 10;
     }
-    #image-container {
-      padding-top: 20px;
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 70px;
+      margin-bottom: 120px;
     }
     #random-image {
-  max-width: 90vw;
-  max-height: 60vh;
-  height: auto;
-  cursor: pointer;
-}
-    #source-info {
+      max-width: 90vw;
+      max-height: 60vh;
+      cursor: pointer;
+    }
+    footer {
       position: fixed;
       bottom: 0;
       left: 0;
-      padding: 0 0 100px 24px;
+      padding: 0 0 50px 24px;
       width: 100%;
       max-width: 90vw;
-      box-sizing: border-box;
       text-align: left;
       font-size: 12px;
       line-height: 1.8;
@@ -55,30 +68,18 @@
         color: black !important;
       }
     }
-  
-    @media screen and (max-width: 600px) {
-      #source-info {
-        margin-top: 6vh !important;
-        padding-bottom: 6vh !important;
-      }
-    }
-    </style>
-    
+  </style>
 </head>
-
-<body style="margin: 0;">
-  <div style="display: grid; grid-template-rows: auto 1fr auto; height: 100vh;">
-
-  <h1 style="margin-top: 30px; font-size: 12px; font-weight: normal;">internet-web.site</h1>
-  <div id="image-container">
-    <img id="random-image" src="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0"
-         alt="random image" onclick="showNextImage()" onerror="handleImageError()" />
-  </div>
-  </div>
-<div id="source-info">
+<body>
+  <header>internet-web.site</header>
+  <main>
+    <img id="random-image" src="https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0" alt="random image" />
+  </main>
+  <footer>
     LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a><br><br>
     internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a>
-  </div>
+  </footer>
+
   <script>
     const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/36597569/original_e59e4c166450d10b725830771b55fb66.jpg?1746930932?bc=0";
     const originalImages = [
@@ -93,35 +94,10 @@
       {
         src: "https://d2w9rnfcy7mm78.cloudfront.net/4347670/original_88805b52a45e6e88b481c92114d245c9.jpg?1558993312?bc=1",
         link: "https://www.are.na/block/4347670"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/29223404/original_950bf077cbc47ddcd14ab468495313bb.jpg?1720067585?bc=0",
-        link: "https://www.are.na/block/29223404"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/28084128/original_80198254ea861599dc11f9197538a844.jpg?1715636861?bc=0",
-        link: "https://www.are.na/block/28084128"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/16099380/original_8483cf636ed1d8add723d3de56639b27.gif?1650264983?bc=0",
-        link: "https://www.are.na/block/16099380"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/6585688/original_7b89df5dbd770402d5f295107ebf3da5.jpg?1585167689?bc=0",
-        link: "https://www.are.na/block/6585688"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/35465870/original_895e1f7b681c9c4389de62802c5a4a9a.gif?1742803753?bc=0",
-        link: "https://www.are.na/block/35465870"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/1515451/original_357db6746d8d7d045cb6a34b7cfe1aaa.jpg?1513593549?bc=1",
-        link: "https://www.are.na/block/1515451"
       }
     ];
 
-    let shuffledImages = [];
-    let currentIndex = 0;
+    let shuffledImages = [], currentIndex = 0;
 
     function shuffleImages() {
       shuffledImages = [...originalImages];
@@ -137,21 +113,30 @@
         shuffleImages();
       }
       const imgData = shuffledImages[currentIndex];
-      document.getElementById("random-image").src = imgData.src;
+      const imageEl = document.getElementById("random-image");
+      imageEl.src = imgData.src;
       document.getElementById("source-link").href = imgData.link;
       currentIndex++;
-    }
-
-    function handleImageError() {
-      document.getElementById("random-image").src = fallbackImage;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       shuffleImages();
     });
+
+    document.getElementById("random-image").addEventListener("click", showNextImage);
+
+    let touchStartX = 0, touchStartY = 0;
+    window.addEventListener("touchstart", e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    });
+    window.addEventListener("touchend", e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+        showNextImage();
+      }
+    });
   </script>
-
-  </div>
 </body>
-
 </html>
