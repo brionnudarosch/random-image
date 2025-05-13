@@ -86,88 +86,105 @@
   </div>
   <script>
     const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/36597569/original_e59e4c166450d10b725830771b55fb66.jpg?1746930932?bc=0";
-    const originalImages = [
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/9326275/original_1faa2a1c1b94c9ae497e237733872902.jpg?1604110101?bc=0",
-        link: "https://www.are.na/block/9326275"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/520498/original_f8f5f6e5bbf08eb7a77c2ca87f193029.jpg?1452893311?bc=1",
-        link: "https://www.are.na/block/520498"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/4347670/original_88805b52a45e6e88b481c92114d245c9.jpg?1558993312?bc=1",
-        link: "https://www.are.na/block/4347670"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/29223404/original_950bf077cbc47ddcd14ab468495313bb.jpg?1720067585?bc=0",
-        link: "https://www.are.na/block/29223404"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/28084128/original_80198254ea861599dc11f9197538a844.jpg?1715636861?bc=0",
-        link: "https://www.are.na/block/28084128"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/16099380/original_8483cf636ed1d8add723d3de56639b27.gif?1650264983?bc=0",
-        link: "https://www.are.na/block/16099380"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/6585688/original_7b89df5dbd770402d5f295107ebf3da5.jpg?1585167689?bc=0",
-        link: "https://www.are.na/block/6585688"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/35465870/original_895e1f7b681c9c4389de62802c5a4a9a.gif?1742803753?bc=0",
-        link: "https://www.are.na/block/35465870"
-      },
-      {
-        src: "https://d2w9rnfcy7mm78.cloudfront.net/1515451/original_357db6746d8d7d045cb6a34b7cfe1aaa.jpg?1513593549?bc=1",
-        link: "https://www.are.na/block/1515451"
-      }
+
+    const encodedImages = [
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8yNDMxMDc2OS9vcmlnaW5hbF82NmM5YzZiYWY5Mzg3NWE1NGI0OGI4OTg0MzcyYjU1NS5qcGc/MTY5ODA3NjY4Nz9iYz0w", link: "https://www.are.na/block/24310769" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zNjYwNDEwNi9vcmlnaW5hbF9mNDNlMzMzNzhhYzQwN2ExMWI3M2JjMjdmZGM2ZGVmZi5naWY/MTc0NjkzNTMwMz9iYz0w", link: "https://www.are.na/block/36604106" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zNjU5NzU2OS9vcmlnaW5hbF9lNTllNGMxNjY0NTBkMTBiNzI1ODMwNzcxYjU1ZmI2Ni5qcGc/MTc0NjkzMDkzMj9iYz0w", link: "https://www.are.na/block/36597569" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8yMTU2NzE2My9vcmlnaW5hbF84YmZiZjM2MWViNjFhYTIzNmRjNmU0Y2I0N2QxMmE5MC5qcGc/MTY3ODY1ODgyND9iYz0w", link: "https://www.are.na/block/21567163" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8yMzIzNjcxMy9vcmlnaW5hbF9hMWY1NDIxMjFiMmE5YmI5NWEzZjMzZjlkMWY2MzEzNC5qcGc/MTY4NjU0MzQ1OT9iYz0w", link: "https://www.are.na/block/23236713" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8xOTQyODQ3NC9vcmlnaW5hbF80ZjZlNDQ1ZDZkYzdlM2RjNmY5ZTM5NGUyMzk2ZmQ1Mi5qcGc/MTY2NTI0OTYxNT9iYz0w", link: "https://www.are.na/block/19428474" }
     ];
 
-    let shuffledImages = [];
-    let currentIndex = 0;
+    const decodedImages = encodedImages.map(item => ({
+      src: atob(item.src),
+      link: item.link
+    }));
 
-    function shuffleImages() {
-      shuffledImages = [...originalImages];
-      for (let i = shuffledImages.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledImages[i], shuffledImages[j]] = [shuffledImages[j], shuffledImages[i]];
-      }
-      currentIndex = 0;
+    let currentIndex = 0;
+    const imageElement = document.getElementById("randomImage");
+    const linkElement = document.getElementById("imageLink");
+
+    function showImage(index) {
+      const item = decodedImages[index];
+      imageElement.src = item.src;
+      linkElement.href = item.link;
     }
 
     function showNextImage() {
-      if (currentIndex >= shuffledImages.length) {
-        shuffleImages();
-      }
-      const imgData = shuffledImages[currentIndex];
-      document.getElementById("random-image").src = imgData.src;
-      document.getElementById("source-link").href = imgData.link;
-      currentIndex++;
+      currentIndex = (currentIndex + 1) % decodedImages.length;
+      showImage(currentIndex);
     }
 
-    function handleImageError() {
-      document.getElementById("random-image").src = fallbackImage;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      shuffleImages();
+    imageElement.addEventListener("click", showNextImage);
+    imageElement.addEventListener("error", () => {
+      imageElement.src = fallbackImage;
     });
-  
+
+    let touchStartX = 0;
+    function handleTouchStart(e) {
+      touchStartX = e.touches[0].clientX;
+    }
+    function handleTouchEnd(e) {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 30) showNextImage();
+    }
+
+    imageElement.addEventListener("touchstart", handleTouchStart);
+    imageElement.addEventListener("touchend", handleTouchEnd);
+
+    showImage(currentIndex);
 </script>
 <script>
-  let touchStartX = 0, touchStartY = 0;
-  function handleTouchStart(e) {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }
-  function handleTouchEnd(e) {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 30) {
-      showNextImage();
+    const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/36597569/original_e59e4c166450d10b725830771b55fb66.jpg?1746930932?bc=0";
+
+    const encodedImages = [
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8yNDMxMDc2OS9vcmlnaW5hbF82NmM5YzZiYWY5Mzg3NWE1NGI0OGI4OTg0MzcyYjU1NS5qcGc/MTY5ODA3NjY4Nz9iYz0w", link: "https://www.are.na/block/24310769" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zNjYwNDEwNi9vcmlnaW5hbF9mNDNlMzMzNzhhYzQwN2ExMWI3M2JjMjdmZGM2ZGVmZi5naWY/MTc0NjkzNTMwMz9iYz0w", link: "https://www.are.na/block/36604106" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zNjU5NzU2OS9vcmlnaW5hbF9lNTllNGMxNjY0NTBkMTBiNzI1ODMwNzcxYjU1ZmI2Ni5qcGc/MTc0NjkzMDkzMj9iYz0w", link: "https://www.are.na/block/36597569" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8yMTU2NzE2My9vcmlnaW5hbF84YmZiZjM2MWViNjFhYTIzNmRjNmU0Y2I0N2QxMmE5MC5qcGc/MTY3ODY1ODgyND9iYz0w", link: "https://www.are.na/block/21567163" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8yMzIzNjcxMy9vcmlnaW5hbF9hMWY1NDIxMjFiMmE5YmI5NWEzZjMzZjlkMWY2MzEzNC5qcGc/MTY4NjU0MzQ1OT9iYz0w", link: "https://www.are.na/block/23236713" },
+      { src: "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8xOTQyODQ3NC9vcmlnaW5hbF80ZjZlNDQ1ZDZkYzdlM2RjNmY5ZTM5NGUyMzk2ZmQ1Mi5qcGc/MTY2NTI0OTYxNT9iYz0w", link: "https://www.are.na/block/19428474" }
+    ];
+
+    const decodedImages = encodedImages.map(item => ({
+      src: atob(item.src),
+      link: item.link
+    }));
+
+    let currentIndex = 0;
+    const imageElement = document.getElementById("randomImage");
+    const linkElement = document.getElementById("imageLink");
+
+    function showImage(index) {
+      const item = decodedImages[index];
+      imageElement.src = item.src;
+      linkElement.href = item.link;
     }
-  }
+
+    function showNextImage() {
+      currentIndex = (currentIndex + 1) % decodedImages.length;
+      showImage(currentIndex);
+    }
+
+    imageElement.addEventListener("click", showNextImage);
+    imageElement.addEventListener("error", () => {
+      imageElement.src = fallbackImage;
+    });
+
+    let touchStartX = 0;
+    function handleTouchStart(e) {
+      touchStartX = e.touches[0].clientX;
+    }
+    function handleTouchEnd(e) {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 30) showNextImage();
+    }
+
+    imageElement.addEventListener("touchstart", handleTouchStart);
+    imageElement.addEventListener("touchend", handleTouchEnd);
+
+    showImage(currentIndex);
 </script>
 
   </div>
