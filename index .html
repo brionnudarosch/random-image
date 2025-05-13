@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Image Viewer</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #fff;
+      font-family: sans-serif;
+      height: 100%;
+      width: 100%;
+    }
+    .viewer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      max-width: 100vw;
+      max-height: 100vh;
+      object-fit: contain;
+    }
+    header, footer {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      padding: 10px;
+      text-align: center;
+      z-index: 10;
+    }
+    header { top: 0; }
+    footer { bottom: 0; }
+  </style>
+</head>
+<body>
+  <header>Random Image Viewer</header>
+  <div class="viewer">
+    <img id="image" src="" alt="Random Viewer" onerror="handleError(this)" />
+  </div>
+  <footer>&copy; internet-web.site</footer>
+
+  <script>
+    const base64Urls = [
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzQxL29yaWdpbmFsXzZhMjI2MzRhN2YxNmQ1YzhmOTJhM2EzZTY0YjhmYzcyLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzQzL29yaWdpbmFsXzEzNzliM2QzMDU0NGQzYzhlOWM1MDQyZGU4ZTlhMGI3LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzQ1L29yaWdpbmFsXzIzNDVmOGEzZDJjNzE5MGYxYTJkMDUzMDdiMTA5MzhkLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzQ2L29yaWdpbmFsXzViYjBhNWMzOGUwZTQzZDNhNGZkMDVmZjYyZThiNGUzLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzQ3L29yaWdpbmFsX2Q5MThkNDM4NGQ2ZGQ1NDhkMGQ0MTBjM2JjOGViM2YyLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzQ5L29yaWdpbmFsXzdmMjI2NjJlMzgyN2M3Y2NmYzY3YTkwMTdiOGYzZDY0LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzUwL29yaWdpbmFsX2U0ODk5MDU2YzdmM2UzZTNkZjE5ZTRjMGVmY2QwMmJlLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzUxL29yaWdpbmFsXzgzNjNhNjdjMjE4M2Q4OWM3Y2IzYTJkYjdlZGJjODRmLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzUyL29yaWdpbmFsX2E4MjY0YjAxZjAxOWYxYTg5YjI0NDExN2I4NDAyOTU0LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzU0L29yaWdpbmFsXzhjNDJlNGQ1ZDkwZjU3ZjU2MWUwOTVhMWYwZWE2YjQ4LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzU2L29yaWdpbmFsXzA1NzAxNWI5ZTRiMjVjOWQyYjBiYzNlMDU0MmExZGI3LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzU3L29yaWdpbmFsXzRhODU5MzAyN2MxYTVmN2UxM2U2N2Y2YzE5M2I0YWRmLmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzU4L29yaWdpbmFsXzA3MzFhNTI0NWFkMDYwMTViOGY2NzVjYjA3MWViYzg0LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzU5L29yaWdpbmFsX2ExYjFlZGViMjY0MDE1MjY3YjRjMzllNjdiZTg5OWQ1LmpwZw==",
+      "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8zODQwMzYwL29yaWdpbmFsXzEwZWUxNzk3OGY0NzI3ZGJkY2YxZDQwYzU4ZTZmMTJhLmpwZw=="
+    ];
+
+    const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/default_fallback.jpg";
+    let currentIndex = 0;
+    const image = document.getElementById("image");
+
+    function decodeBase64(str) {
+      return decodeURIComponent(escape(window.atob(str)));
+    }
+
+    function loadImage(index) {
+      const decodedUrl = decodeBase64(base64Urls[index]);
+      image.src = decodedUrl;
+    }
+
+    function handleError(img) {
+      img.onerror = null;
+      img.src = fallbackImage;
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % base64Urls.length;
+      loadImage(currentIndex);
+    }
+
+    function showPrevious() {
+      currentIndex = (currentIndex - 1 + base64Urls.length) % base64Urls.length;
+      loadImage(currentIndex);
+    }
+
+    image.addEventListener("click", showNext);
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    image.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    image.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 30) {
+        showNext();
+      } else if (touchEndX > touchStartX + 30) {
+        showPrevious();
+      }
+    });
+
+    // Initial load
+    loadImage(currentIndex);
+  </script>
+</body>
+</html>
