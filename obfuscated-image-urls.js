@@ -1,5 +1,4 @@
 const base64Urls = [
-  "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8xMjM0NTYvb3JpZ2luYWxfaW1nMS5qcGc=",
-  "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC83ODkxMDExL29yaWdpbmFsX2ltZzIucG5n",
-  "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8xMjEzMTQvb3JpZ2luYWxfaW1nMy5naWY="
+  "aHR0cHM6Ly9kMnc5cm5mY3k3bW03OC5jbG91ZGZyb250Lm5ldC8xMDEyMzQ1Ni9vcmlnaW5hbF9leGFtcGxlLmpwZw==",
+  // ... 752 more lines here
 ];
