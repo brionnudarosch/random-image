@@ -72,86 +72,85 @@
 </head>
 
 <body style="margin: 0;">
-<div style="display: grid; grid-template-rows: auto 1fr auto; height: 100vh;">
- <div id="image-container">
-  <img id="random-image" alt="random image" />
-</div>
-</div>
+  <div style="display: grid; grid-template-rows: auto 1fr auto; height: 100vh;">
 
-</div>
-</div>
+    <h1 style="margin-top: 30px; font-size: 12px; font-weight: normal;">internet-web.site</h1>
 
-  <img id="random-image" alt="random image" />
-</div>
+    <div id="image-container">
+      <img id="random-image" alt="random image" />
+    </div>
 
   </div>
-<div id="source-info">
+
+  <div id="source-info">
     LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a><br><br>
     internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a>
   </div>
-<script src="obfuscated-image-urls.js"></script>
-<script src="source-map.js"></script>
 
-<script>
-  const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/default_fallback.jpg";
-  let currentIndex = 0;
-  const image = document.getElementById("random-image");
-  const sourceLink = document.getElementById("source-link");
+  <script src="obfuscated-image-urls.js"></script>
+  <script src="source-map.js"></script>
 
-  function decodeBase64(str) {
-    return atob(str);
-  }
+  <script>
+    const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/default_fallback.jpg";
+    let currentIndex = 0;
+    const image = document.getElementById("random-image");
+    const sourceLink = document.getElementById("source-link");
 
-  function loadImage(index) {
-    const obfuscated = base64Urls[index];
-    const decodedUrl = decodeBase64(obfuscated);
-    image.src = decodedUrl;
-
-    if (sourceMap && sourceMap[obfuscated]) {
-      sourceLink.href = sourceMap[obfuscated];
-      sourceLink.style.display = "block";
-    } else {
-      sourceLink.style.display = "none";
+    function decodeBase64(str) {
+      return atob(str);
     }
-  }
 
-  function handleError(img) {
-    img.onerror = null;
-    img.src = fallbackImage;
-  }
+    function loadImage(index) {
+      const obfuscated = base64Urls[index];
+      const decodedUrl = decodeBase64(obfuscated);
+      image.src = decodedUrl;
 
-  function showNext() {
-    currentIndex = (currentIndex + 1) % base64Urls.length;
-    loadImage(currentIndex);
-  }
-
-  function showPrevious() {
-    currentIndex = (currentIndex - 1 + base64Urls.length) % base64Urls.length;
-    loadImage(currentIndex);
-  }
-
-  image.addEventListener("click", showNext);
-
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  image.addEventListener("touchstart", (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
-
-  image.addEventListener("touchend", (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 30) {
-      showNext();
-    } else if (touchEndX > touchStartX + 30) {
-      showPrevious();
+      if (sourceMap && sourceMap[obfuscated]) {
+        sourceLink.href = sourceMap[obfuscated];
+        sourceLink.style.display = "block";
+      } else {
+        sourceLink.style.display = "none";
+      }
     }
-  });
 
-  // ✅ Initial image load
-  window.addEventListener("load", () => {
-    loadImage(currentIndex);
-  });
-</script>
+    function handleError(img) {
+      img.onerror = null;
+      img.src = fallbackImage;
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % base64Urls.length;
+      loadImage(currentIndex);
+    }
+
+    function showPrevious() {
+      currentIndex = (currentIndex - 1 + base64Urls.length) % base64Urls.length;
+      loadImage(currentIndex);
+    }
+
+    image.addEventListener("click", showNext);
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    image.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    image.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 30) {
+        showNext();
+      } else if (touchEndX > touchStartX + 30) {
+        showPrevious();
+      }
+    });
+
+    // ✅ Initial image load
+    window.addEventListener("load", () => {
+      loadImage(currentIndex);
+    });
+  </script>
+
 </body>
 </html>
