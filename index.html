@@ -90,8 +90,9 @@
 <script>
   const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/default_fallback.jpg";
   let currentIndex = 0;
-const image = document.getElementById("random-image");
+  const image = document.getElementById("random-image");
   const sourceLink = document.getElementById("source-link");
+
   function decodeBase64(str) {
     return atob(str);
   }
@@ -138,8 +139,14 @@ const image = document.getElementById("random-image");
     if (touchEndX < touchStartX - 30) {
       showNext();
     } else if (touchEndX > touchStartX + 30) {
+      showPrevious();
+    }
+  });
 
-  </div>
+  // ✅ Initial image load
+  window.addEventListener("load", () => {
+    loadImage(currentIndex);
+  });
+</script>
 </body>
-
 </html>
