@@ -77,7 +77,7 @@
     <h1 style="margin-top: 30px; font-size: 12px; font-weight: normal;">internet-web.site</h1>
 
     <div id="image-container">
-      <img id="random-image" alt="random image" />
+      <img id="random-image" alt="random image" onerror="handleError(this)" />
     </div>
 
   </div>
@@ -91,66 +91,93 @@
 <script src="source-map.js"></script>
 
   <script>
-    const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/default_fallback.jpg";
-    let currentIndex = 0;
-    const image = document.getElementById("random-image");
-    const sourceLink = document.getElementById("source-link");
+  const fallbackImage = "https://d2w9rnfcy7mm78.cloudfront.net/36597569/original_e59e4c166450d10b725830771b55fb66.jpg?1746930932?bc=0";
+  const firstImage = "https://d2w9rnfcy7mm78.cloudfront.net/36604106/original_f43e33378ac407a11b73bc27fdc6deff.gif?1746935303?bc=0";
 
-    function decodeBase64(str) {
-      return atob(str);
+  const image = document.getElementById("random-image");
+  const sourceLink = document.getElementById("source-link");
+
+  let currentIndex = -1; // -1 means "first image is fixed"
+  let usedIndexes = new Set();
+
+  function decodeBase64(str) {
+    return atob(str);
+  }
+
+  function loadImage(index) {
+    if (index === -1) {
+      image.src = firstImage;
+      sourceLink.href = "https://www.are.na/block/36604106"; // link to first image block
+      sourceLink.style.display = "block";
+      return;
     }
 
-    function loadImage(index) {
-      const obfuscated = base64Urls[index];
-      const decodedUrl = decodeBase64(obfuscated);
-      image.src = decodedUrl;
+    const obfuscated = base64Urls[index];
+    const decodedUrl = decodeBase64(obfuscated);
+    image.src = decodedUrl;
 
-      if (sourceMap && sourceMap[obfuscated]) {
-        sourceLink.href = sourceMap[obfuscated];
-        sourceLink.style.display = "block";
-      } else {
-        sourceLink.style.display = "none";
-      }
+    if (sourceMap && sourceMap[obfuscated]) {
+      sourceLink.href = sourceMap[obfuscated];
+      sourceLink.style.display = "block";
+    } else {
+      sourceLink.style.display = "none";
     }
+  }
 
-    function handleError(img) {
-      img.onerror = null;
-      img.src = fallbackImage;
+  function handleError(img) {
+    img.onerror = null;
+    img.src = fallbackImage;
+  }
+
+  function getNextRandomIndex() {
+    if (usedIndexes.size >= base64Urls.length) {
+      usedIndexes.clear(); // reset if we've used all images
     }
+    let next;
+    do {
+      next = Math.floor(Math.random() * base64Urls.length);
+    } while (usedIndexes.has(next));
+    usedIndexes.add(next);
+    return next;
+  }
 
-    function showNext() {
-      currentIndex = (currentIndex + 1) % base64Urls.length;
-      loadImage(currentIndex);
+  function showNext() {
+    if (currentIndex === -1) {
+      currentIndex = getNextRandomIndex(); // switch to random rotation after first image
+    } else {
+      currentIndex = getNextRandomIndex();
     }
+    loadImage(currentIndex);
+  }
 
-    function showPrevious() {
-      currentIndex = (currentIndex - 1 + base64Urls.length) % base64Urls.length;
-      loadImage(currentIndex);
+  function showPrevious() {
+    // optional: implement if you want back button functionality
+  }
+
+  image.addEventListener("click", showNext);
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  image.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  image.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX < touchStartX - 30) {
+      showNext();
+    } else if (touchEndX > touchStartX + 30) {
+      showPrevious();
     }
+  });
 
-    image.addEventListener("click", showNext);
+  // ✅ Load fixed image on first load
+  window.addEventListener("load", () => {
+    loadImage(currentIndex);
+  });
+</script>
 
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    image.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-
-    image.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchEndX < touchStartX - 30) {
-        showNext();
-      } else if (touchEndX > touchStartX + 30) {
-        showPrevious();
-      }
-    });
-
-    // ✅ Initial image load
-    window.addEventListener("load", () => {
-      loadImage(currentIndex);
-    });
-  </script>
 
 </body>
 </html>
