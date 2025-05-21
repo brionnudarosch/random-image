@@ -35,18 +35,27 @@
   cursor: pointer;
 }
     #source-info {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      padding: 0 0 100px 24px;
-      width: 100%;
-      max-width: 90vw;
-      box-sizing: border-box;
-      text-align: left;
-      font-size: 12px;
-      line-height: 1.8;
-      background: white;
-    }
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 16px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 12px;
+  line-height: 1.4;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#source-info p {
+  margin: 0;
+}
+
+#source-line {
+  white-space: nowrap;
+}
     a {
       color: black;
       text-decoration: underline;
@@ -83,9 +92,9 @@
   </div>
 
   <div id="source-info">
-    LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a><br><br>
-    internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a>
-  </div>
+  <p id="source-line">LINK: <a id="source-link" href="https://www.are.na/block/36575498" target="_blank">image source</a></p>
+  <p>internet-web.site curated by: <a href="https://www.brionnudarosch.com" target="_blank">brion nuda rosch</a></p>
+</div>
 
 <script src="obfuscated-image-urls.js"></script>
 <script src="source-map.js"></script>
