@@ -134,7 +134,7 @@
       return;
     }
 
-    const obfuscated = base64Urls[index];
+    const obfuscated = base64Urls[index].trim();
     const decodedUrl = decodeBase64(obfuscated);
     image.src = decodedUrl;
 
