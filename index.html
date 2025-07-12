@@ -30,9 +30,11 @@
       font-size: 12px;
       font-weight: normal;
     }
-    #image-container {
+   #image-container {
   display: flex;
-  justify-content: center;
+  justify-content: center;     /* center L to R */
+  align-items: flex-start;     /* align to top */
+  flex-direction: column;      /* ensures vertical flow */
   padding-top: 20px;
 }
 
