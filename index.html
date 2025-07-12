@@ -138,10 +138,17 @@
     const decodedUrl = decodeBase64(obfuscated);
     image.src = decodedUrl;
 
+    // DEBUG LOGS
+    console.log("🔍 current obfuscated:", obfuscated);
+    console.log("🔍 decodedUrl:", decodedUrl);
+    console.log("🔍 sourceMap contains key:", Object.prototype.hasOwnProperty.call(sourceMap, obfuscated));
+    console.log("🔍 sample sourceMap keys:", Object.keys(sourceMap).slice(0, 3));
+
     if (sourceMap && sourceMap[obfuscated]) {
       sourceLink.href = sourceMap[obfuscated];
       sourceLink.style.display = "block";
     } else {
+      console.warn("⚠️ No sourceMap entry found for this image.");
       sourceLink.style.display = "none";
     }
   }
