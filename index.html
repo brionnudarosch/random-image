@@ -151,7 +151,7 @@
       return;
     }
 
-    const obfuscated = base64Urls[index].trim();
+    const obfuscated = imageUrls[index].trim();
     const decodedUrl = decodeBase64(obfuscated);
     image.src = decodedUrl;
 
@@ -176,13 +176,13 @@
   }
 
   function getNextRandomIndex() {
-    if (usedIndexes.size >= base64Urls.length) {
+    if (usedIndexes.size >= imageUrls.length {
       usedIndexes.clear(); // reset if we've used all images
     }
     let next;
     do {
-      next = Math.floor(Math.random() * base64Urls.length);
-    } while (usedIndexes.has(next));
+      next = Math.floor(Math.random() * imageUrls.length);
+    } while (usedIndexes.has(Number(next)));
     usedIndexes.add(next);
     return next;
   }
